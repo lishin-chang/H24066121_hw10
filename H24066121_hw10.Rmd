@@ -1,30 +1,186 @@
 ---
 title: "hw10"
 author: "張立勳"
-date: "2019年5月16日"
 output: html_document
 ---
+#Basic calculation 
+```{r}
+1+1 
+3-5 
+4*6 
+12/4 
+3^4 
+31%%7 
+31%/%7 
+``` 
+#Elements storage 
+##vector 
+###use ***c()*** function to collect a list of numbers into a vector
+```{r}
+x<-c(5,7,8) 
+x 
+``` 
+###vectors can be joined together 
+```{r}
+y<-c(x,6:1)
+y
+``` 
+###extract elements from vectors 
+```{r}
+y[5]
+y[c(1,3,5)]
+y[-2]
+y[-(3:5)]
+``` 
+###vector arithmetic 
+```{r}
+z<-x-4
+z
+``` 
+```{r}
+z*2
+z^2
+x^z
+y%%2:4
+``` 
+###simple patterned vectors 
+```{r}
+seq(1,9,by=2)
+rep(3,5)
+rep(seq(2,6,2),2)
+rep(c(1,4),c(3,2))
+rep(c(1,2,4),each=3)
+``` 
+###missing values and other special values 
+the missing value symbol is ***NA*** 
+```{r}
+evens<-NULL
+evens[seq(2,10,2)]<-seq(2,10,2)
+evens
+``` 
+a value which is "not a number" is ***NAN***,usually 0/0
+```{r}
+x<-c(0,7,8)
+x/x
+``` 
+***Inf***,usually 1/0 
+```{r}
+1/x
+``` 
+***numeric(0)*** is a numeric vector of length 0 
+```{r}
+x[0.4]
+x[1.8]
+``` 
+###character vector 
+```{r}
+x<-c("red","yellow","blue")
+y<-c(x,"green")
+y
+``` 
+an attempt to mix data types in a vector will lead to a result that numbers will be converted to the character type 
+```{r}
+z<-c(y,1)
+z
+``` 
+to take substrings,use ***substr(x,start,stop)*** 
+```{r}
+substr(z,2,4)
+``` 
+to concatenate characters 
+```{r}
+paste(x," flower","s",sep="")
+``` 
+***collapse*** parameter allows all the components of the resulting vector to be collapsed into a single string 
+```{r}
+paste(x," flowers",collapse=", ")
+``` 
+###factors and levels 
+```{r}
+x<-c("control","treatment","control","test","treatment")
+y<-factor(x)
+y
+``` 
+to see the levels 
+```{r}
+levels(y)
+``` 
+to see how the levels coded 
+```{r}
+as.integer(y)
+``` 
+the original data can be rewrite as 
+```{r}
+levels(y)[as.integer(y)]
+``` 
+###other 
+to detect where are missing values 
+```{r}
+is.na(evens)
+``` 
+##matrix 
+```{r}
+m<-matrix(1:6,nrow=2,ncol=3)
+m
+m[1,2]
+m[5]
+m[1,]
+m[,1]
+``` 
+##array 
+```{r}
+a<-array(1:24,c(3,4,2))
+``` 
+##data frame 
+```{r}
+colors<-c("red","yellow","blue","green")
+numbers<-c(1,2,3,4)
+c.a.n<-data.frame(colors,numbers,more.n=5:8)
+c.a.n
+``` 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#Plot statistical graphics 
+##high-level 
+###barchart
+```{r}
+barplot(VADeaths)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+###dotchart 
+```{r}
+dotchart(VADeaths)
+```
+ 
+###piechart
+```{r}
+pie(VADeaths)
+```
+ 
+###histogram
+```{r}
+hist(VADeaths)
+```
+ 
+###box plot
+```{r}
+boxplot(VADeaths)
+```
+ 
+###scatterplot
+```{r}
+plot(VADeaths)
+```
+ 
+###QQplot
+```{r}
+#qqplot(VADeaths)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+##low-level 
+###add points
+```{r,echo=FALSE}
+#help(plot)
+#points(2,2)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
