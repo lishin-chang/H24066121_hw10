@@ -14,7 +14,7 @@ output: html_document
 31%/%7 
 ``` 
 #Elements storage 
-##vector 
+##vectors 
 ###use ***c()*** function to collect a list of numbers into a vector
 ```{r}
 x<-c(5,7,8) 
@@ -72,7 +72,7 @@ x/x
 x[0.4]
 x[1.8]
 ``` 
-###character vector 
+###character vectors 
 ```{r}
 x<-c("red","yellow","blue")
 y<-c(x,"green")
@@ -113,12 +113,12 @@ the original data can be rewrite as
 ```{r}
 levels(y)[as.integer(y)]
 ``` 
-###other 
+###others 
 to detect where are missing values 
 ```{r}
 is.na(evens)
 ``` 
-##matrix 
+##matrices 
 ```{r}
 m<-matrix(1:6,nrow=2,ncol=3)
 m
@@ -127,60 +127,314 @@ m[5]
 m[1,]
 m[,1]
 ``` 
-##array 
+##arrays 
 ```{r}
 a<-array(1:24,c(3,4,2))
 ``` 
-##data frame 
+##data frames 
 ```{r}
 colors<-c("red","yellow","blue","green")
 numbers<-c(1,2,3,4)
 c.a.n<-data.frame(colors,numbers,more.n=5:8)
 c.a.n
+names(c.a.n)
+c.a.n$numbers
 ``` 
+##lists 
+```{r}
+x<-c(3,2,3)
+y<-c(7,7)
+list(x=x,y=y)
+``` 
+##elementary built-in functions 
+```{r}
+x=c(seq(1,10),25)
+sum(x)
+mean(x)
+median(x)
+sd(x)
+var(x)
+summary(x)
+``` 
+##logical vectors and relational operators 
+###boolean algebra 
+```{r}
+A<-TRUE
+B<-FALSE
+```
+not A 
+```{r}
+!A
+``` 
+A and B 
+```{r}
+A&B
+``` 
+A or B 
+```{r}
+A|B
+``` 
+###logical operations 
+```{r}
+a<-c(TRUE,FALSE,FALSE,TRUE)
+b<-c(13,7,8,2)
+b[a]
+sum(a)
+``` 
+0 is taken as ***FALSE*** in boolean algebra 
+```{r}
+a&(b-2)
+``` 
+###relational operators 
+```{r}
+a<-c(3,6,9)
+a>4
+a==4
+a>=4
+a!=4
+a[a>4]
+b<-c(4,6,8)
+a<b
+a[a<b]
+```
+#Simulation 
+##binomial 
+* pmf
 
+$dbinom(x,size,prob)$ 
+```{r}
+dbinom(4,6,0.5)
+```
+
+* cdf 
+
+$pbinom(x,size,prob)$
+```{r}
+pbinom(4,6,0.5)
+```
+
+* quantiles 
+
+$qbinom(quantiles,size,prob)$
+```{r}
+qbinom(0.89,6,0.5)
+```
+
+* simulation 
+
+$rbinom(n,size,prob)$
+```{r}
+defectives<-rbinom(24, 15, 0.1)
+defectives
+```
+##poisson
+* pmf 
+ 
+$dpois(x,lambda)$ 
+```{r}
+dpois(3,0.5)
+```
+
+* cdf 
+
+$ppois(x,lambda)$
+```{r}
+ppois(3,0.5)
+```
+
+* quantiles 
+
+$qpois(quantiles,lambda)$
+```{r}
+qpois(0.25,0.5)
+```
+
+* simulation 
+
+$rpois(n,lambda)$
+```{r}
+rpois(10,3.7)
+``` 
+##exponential 
+* pdf 
+ 
+$dexp(x,rate)$ 
+```{r}
+dexp(3,0.5)
+```
+
+* cdf 
+
+$pexp(x,rate)$
+```{r}
+pexp(3,0.5)
+```
+
+* quantiles 
+
+$qexp(quantiles,rate)$
+```{r}
+qexp(0.25,0.5)
+```
+
+
+* simulation 
+
+$rexp(n,rate)$
+```{r}
+rexp(10,3.7)
+``` 
+##normal 
+* pdf 
+ 
+$dnorm(x,mean,sd)$ 
+```{r}
+dnorm(3,2,3)
+```
+
+* cdf 
+
+$pnorm(x,mean,sd)$
+```{r}
+pnorm(3,2,3)
+```
+
+* quantiles 
+
+$qnorm(quantiles,mean,sd)$
+```{r}
+qnorm(0.25,2,3)
+```
+
+
+* simulation 
+
+$rnorm(n,mean,sd)$
+```{r}
+rnorm(10,2,3)
+``` 
 #Plot statistical graphics 
 ##high-level 
-###barchart
+###curve 
+```{r}
+curve(expr=sin,from=0,to=6*pi)
+```
+ 
+###barchart 
 ```{r}
 barplot(VADeaths)
 ```
-
+ 
 ###dotchart 
 ```{r}
 dotchart(VADeaths)
 ```
  
-###piechart
+###piechart 
 ```{r}
 pie(VADeaths)
 ```
  
-###histogram
+###histogram 
 ```{r}
 hist(VADeaths)
 ```
  
-###box plot
+###box plot 
 ```{r}
 boxplot(VADeaths)
 ```
  
-###scatterplot
+###scatterplot 
 ```{r}
 plot(VADeaths)
 ```
  
-###QQplot
+###QQplot 
 ```{r}
-#qqplot(VADeaths)
+x<-rnorm(1000)
+y<-rnorm(1000)
+qqplot(x,y,main="X and Y are the same")
 ```
-
+ 
 ##low-level 
-###add points
-```{r,echo=FALSE}
-#help(plot)
-#points(2,2)
+* points(x,y,...) **adds points**
+
+* lines(x,y,...) **adds line segments**
+
+* text(x,y,labels,..) **adds text into the graph**
+
+* abline(a,b,...) **adds the line y=ax+b**
+
+* abline(h=y,...) **adds a horizontal line**
+
+* abline(v=x,...) **adds a vertical line**
+
+* polygon(x,y,...) **adds a polygon**
+
+* segments(x0,y0,x1,y1,...) **draws line segments**
+
+* arrows(x0,y0,x1,y1,...) **draws arrows**
+
+* symbols(x,y,...) **draws circles,squares,...**
+
+* legend(x,y,legend,...) **draws a legend**
+
+* title(main,sub,xlab,ylab,...) **adds a main title, a sub-title, an x-axis label and a y-axis label**
+
+* mtext(text,side,line,...) **draws text in the margins**
+
+* axis(side,at,labels,...) **adds an axis to the plot**
+
+* box(...) **adds a box around the plot region**
+
+```{r}
+par(mar=c(5,5,5,5)+0.1)
+plot(c(1,9),c(0,50),type="n",xlab="",ylab="")
+text(6,40,"Plot Region")
+points(6,20)
+text(6,20,"(6,20)",adj=c(0.5,2))
+mtext(paste("Margin",1:4),side=1:4,line=3)
+mtext(paste("Line",0:4),side=1,line=0:4,at=3,cex=0.6)
+mtext(paste("Line",0:4),side=2,line=0:4,at=15,cex=0.6)
+mtext(paste("Line",0:4),side=3,line=0:4,at=3,cex=0.6)
+mtext(paste("Line",0:4),side=4,line=0:4,at=15,cex=0.6)
+
 ```
-
-
+ 
+#Programming 
+##the ***for()*** loop 
+***for(name){command}***
+```{r}
+Fibonacci<-numeric(12)
+Fibonacci[1]<-Fibonacci[2]<-1
+for (i in 3:12){
+  Fibonacci[i]<-Fibonacci[i-2]+Fibonacci[i-1]
+}
+Fibonacci
+``` 
+##the ***if()*** statement 
+***if (conditon){commands when TRUE}else{commands when FALSE}***
+```{r}
+x<-3
+if (x>2){
+  y<-2*x
+}else{
+  y<-3*x
+}
+y
+``` 
+##the ***while()*** loop 
+***while(conditon){statements}***
+```{r}
+Fib1<-1
+Fib2<-1
+Fibonacci<-c(Fib1,Fib2)
+while (Fib2<300){
+  Fibonacci<-c(Fibonacci,Fib2)
+  oldFib2<-Fib2
+  Fib2<-Fib1+Fib2
+  Fib1<-oldFib2
+}
+Fibonacci
+``` 
